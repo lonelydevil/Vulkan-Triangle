@@ -44,14 +44,14 @@ uint32_t getBestPhysicalDeviceIndex(VkPhysicalDevice *pPhysicalDevices, uint32_t
 		for(uint32_t i = 0; i < discreteGPUNumber; i++){
 			if(bestPhysicalDeviceMemory < getPhysicalDeviceTotalMemory(&physicalDeviceMemoryProperties[discreteGPUIndices[i]])){
 				bestPhysicalDeviceMemory = getPhysicalDeviceTotalMemory(&physicalDeviceMemoryProperties[discreteGPUIndices[i]]);
-				bestPhysicalDeviceIndex = i;
+				bestPhysicalDeviceIndex = discreteGPUIndices[i];
 			}
 		}
 	}else if(integratedGPUNumber != 0){
 		for(uint32_t i = 0; i < integratedGPUNumber; i++){
 			if(bestPhysicalDeviceMemory < getPhysicalDeviceTotalMemory(&physicalDeviceMemoryProperties[integratedGPUIndices[i]])){
 				bestPhysicalDeviceMemory = getPhysicalDeviceTotalMemory(&physicalDeviceMemoryProperties[integratedGPUIndices[i]]);
-				bestPhysicalDeviceIndex = i;
+				bestPhysicalDeviceIndex = integratedGPUIndices[i];
 			}
 		}
 	}
