@@ -5,20 +5,18 @@ project(Vulkan\ Triangle)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
-add_executable(vulkan-triangle
-	Sources/vk_triangle.c
-	Sources/vk_instance.c
-	Sources/vk_physical_device.c
-	Sources/vk_device.c
-	Sources/vk_queue.c
-	Sources/vk_surface.c
-	Sources/vk_image.c
-	Sources/vk_frame.c
-	Sources/vk_shader.c
-	Sources/vk_pipeline.c
-	Sources/vk_command.c
-	Sources/vk_synchronization.c
-	Sources/vk_present.c)
+set(GLFW_BASE_PATH C:/src/GLFW)
+set(VULKAN_BASE_PATH C:/VulkanSDK/1.2.182.0)
+
+file(GLOB_RECURSE HEADERS_FILES
+		${PROJECT_SOURCE_DIR}/headers/*.h
+		${PROJECT_SOURCE_DIR}/headers/*.inl
+)
+file(GLOB_RECURSE SOURCES_FILES
+		${PROJECT_SOURCE_DIR}/Sources/*.c
+)
+
+add_executable(vulkan-triangle ${SOURCES_FILES})
 
 if(UNIX AND NOT APPLE)
 	#[[
@@ -51,12 +49,12 @@ elseif(WIN32)
 		based on your install directories
 	]]
 	target_include_directories(vulkan-triangle PRIVATE
-		C:/VulkanSDK/1.2.176.1/Include
-		C:/glfw/include)
+			${VULKAN_BASE_PATH}/Include
+			${GLFW_BASE_PATH}/include)
 
 	target_link_libraries(vulkan-triangle
-		C:/VulkanSDK/1.2.176.1/Lib/vulkan-1.lib
-		C:/glfw/lib-mingw-w64/libglfw3dll.a)
+		${VULKAN_BASE_PATH}/Lib/vulkan-1.lib
+		${GLFW_BASE_PATH}/lib-mingw-w64/libglfw3dll.a)
 		# if you're using Visual C++ 2019, add '#' to the line above
 		# and delete '#' from the line below
 		#C:/glfw/lib-vc2019/libglfw3dll.a)
@@ -94,7 +92,7 @@ if(WIN32)
 		modify the path to glfw3.dll to your own path
 	]]
 	add_custom_target(glfw3.dll
-		COMMAND ${CMAKE_COMMAND} -E copy C:/glfw/lib-mingw-w64/glfw3.dll ${CMAKE_BINARY_DIR}/)
+		COMMAND ${CMAKE_COMMAND} -E copy ${GLFW_BASE_PATH}/lib-mingw-w64/glfw3.dll ${CMAKE_BINARY_DIR}/)
 		# if you're using Visual C++ 2019, add '#' to the line above
 		# and delete '#' from the line below
 		#COMMAND ${CMAKE_COMMAND} -E copy C:/glfw/lib-vc2019/glfw3.dll ${CMAKE_BINARY_DIR}/Debug/)
