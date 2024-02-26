@@ -6,7 +6,7 @@
 int main(){
 	glfwInit();
 
-	VkInstance instance = createInstance();
+	 VkInstance instance = createInstance("vk_triangle", VK_MAKE_VERSION(0, 0, 1), "NO ENGINE", VK_MAKE_VERSION(0, 0, 0));
 
 	uint32_t physicalDeviceNumber = getPhysicalDeviceNumber(&instance);
 	VkPhysicalDevice *physicalDevices = getPhysicalDevices(&instance, physicalDeviceNumber);
